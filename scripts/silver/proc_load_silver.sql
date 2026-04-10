@@ -19,7 +19,6 @@ Usage example:
 ======================================================================================
 */
 
-
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN 
 	DECLARE @start_time DATETIME, @end_time DATETIME, @batch_start_time DATETIME, @batch_end_time DATETIME;
@@ -46,7 +45,6 @@ BEGIN
 			cst_gndr, 
 			cst_create_date
 		)
-
 		SELECT 
 		cst_id,
 		cst_key,
@@ -145,7 +143,7 @@ BEGIN
 
 		SET @start_time = GETDATE()
 		PRINT '>>Truncating Table: silver.erp_cust_az12'
-		TRUNCATE TABLE silver.crm_sales_details
+		TRUNCATE TABLE silver.erp_cust_az12
 		PRINT '>>Inserting Data Into: silver.erp_cust_az12'
 		INSERT INTO silver.erp_cust_az12(
   			cid,
@@ -169,7 +167,7 @@ BEGIN
 		
 		SET @start_time = GETDATE()
 		PRINT '>>Truncating Table: silver.erp_loc_a101'
-		TRUNCATE TABLE silver.crm_sales_details
+		TRUNCATE TABLE silver.erp_loc_a101
 		PRINT '>>Inserting Data Into: silver.erp_loc_a101'
 		INSERT INTO silver.erp_loc_a101(cid, cntry)
 		SELECT 
@@ -185,7 +183,7 @@ BEGIN
 		
 		SET @start_time = GETDATE()
 		PRINT '>>Truncating Table: silver.erp_px_cat_g1v2'
-		TRUNCATE TABLE silver.crm_sales_details
+		TRUNCATE TABLE silver.erp_px_cat_g1v2
 		PRINT '>>Inserting Data Into: silver.erp_px_cat_g1v2'
 		INSERT INTO silver.erp_px_cat_g1v2 (id, cat, subcat, maintenance)
 		SELECT 
@@ -199,7 +197,7 @@ BEGIN
 		
 		SET @batch_end_time = GETDATE();
 		PRINT '============================================='
-		PRINT 'Loading Bronze Layer is Completed'
+		PRINT 'Loading Silver Layer is Completed'
 		PRINT '---- Total Load Duration: ' + CAST(DATEDIFF(second, @batch_start_time, @batch_end_time) AS NVARCHAR) + 'seconds';
 		PRINT '============================================='
 	END TRY 
